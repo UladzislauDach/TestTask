@@ -3,27 +3,52 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 public class TestAssignment {
     public static void main(String[] args) throws IOException {
         ArrayList<String> strings = new ArrayList<>();
-        String operation;
+        String mathOperation;
         Map<Character, Integer[][]> mapMatrix;
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
             String input = br.readLine();
             if (!input.equals("")) { //it's ok?
-                System.out.println(matrixValidate(input));
                 strings.add(input);
             } else break;
         }
-        operation = br.readLine();
+        mathOperation = br.readLine();
         mapMatrix = stringToMapMatrix(strings);
 
+        Integer[][] result = multiplication(mapMatrix.get('E'), mapMatrix.get('E'));
+        for (int i = 0; i < result.length; i++) {
+            for (int j = 0; j < result[0].length; j++) {
+                System.out.print(" " + result[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static Integer[][] multiplication(Integer[][] a, Integer[][] b) {
+        if (a[0].length != b.length) {
+            throw new IllegalArgumentException("matrices cannot be multiplied");
+        }
+        Integer[][] result = new Integer[a.length][b[0].length];
+        Integer[] columnJ = new Integer[a[0].length];
+        for (int j = 0; j < b[0].length; j++) {
+            for (int k = 0; k < a[0].length; k++) {
+                columnJ[k] = b[k][j];
+            }
+            for (int i = 0; i < a.length; i++) {
+                Integer[] rowI = a[i];
+                Integer s = 0;
+                for (int k = 0; k < a[0].length; k++) {
+                    s += rowI[k] * columnJ[k];
+                }
+                result[i][j] = s;
+            }
+        }
+        return result;
     }
 
     public static Map<Character, Integer[][]> stringToMapMatrix(ArrayList<String> inputList) {
@@ -47,9 +72,4 @@ public class TestAssignment {
         }
         return allMatrixMap;
     }
-
-    public static boolean matrixValidate(String s) {
-        return Pattern.matches("[A-Z]=\\[(\\d+;?\\s?)+]", s);
-    }
-
 }
