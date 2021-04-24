@@ -1,23 +1,17 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class TestAssignment {
     public static void main(String[] args) throws IOException {
-        ArrayList<String> strings = new ArrayList<>();
-        String mathOperation;
         Map<Character, Integer[][]> mapMatrix;
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        while (true) {
-            String input = br.readLine();
-            if (!input.equals("")) { //it's ok?
-                strings.add(input);
-            } else break;
-        }
-        mathOperation = br.readLine();
+        List<String> strings;
+        String mathOperation;
+        mathOperation = args[args.length - 1];
+
+        strings = argsToList(args);
         mapMatrix = stringToMapMatrix(strings);
 
         Integer[][] result = multiplication(mapMatrix.get('E'), mapMatrix.get('E'));
@@ -27,6 +21,16 @@ public class TestAssignment {
             }
             System.out.println();
         }
+    }
+
+    public static List<String> argsToList(String[] array) {
+        List<String> list = new ArrayList<>();
+        for (String line : array) {
+            if (!line.equals("")) {
+                list.add(line);
+            } else break;
+        }
+        return list;
     }
 
     public static Integer[][] multiplication(Integer[][] a, Integer[][] b) {
@@ -51,7 +55,7 @@ public class TestAssignment {
         return result;
     }
 
-    public static Map<Character, Integer[][]> stringToMapMatrix(ArrayList<String> inputList) {
+    public static Map<Character, Integer[][]> stringToMapMatrix(List<String> inputList) {
         Map<Character, Integer[][]> allMatrixMap = new HashMap<>();
         int matrixWidth;
         int matrixHeight;
