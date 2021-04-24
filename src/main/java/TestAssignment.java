@@ -14,13 +14,15 @@ public class TestAssignment {
         strings = argsToList(args);
         mapMatrix = stringToMapMatrix(strings);
 
-        Integer[][] result = multiplication(mapMatrix.get('E'), mapMatrix.get('E'));
+        Integer[][] result = multiplication(mapMatrix.get('A'), mapMatrix.get('B'));
+
         for (int i = 0; i < result.length; i++) {
             for (int j = 0; j < result[0].length; j++) {
                 System.out.print(" " + result[i][j] + " ");
             }
             System.out.println();
         }
+        System.out.println(mathOperation);
     }
 
     public static List<String> argsToList(String[] array) {
@@ -57,14 +59,14 @@ public class TestAssignment {
 
     public static Map<Character, Integer[][]> stringToMapMatrix(List<String> inputList) {
         Map<Character, Integer[][]> allMatrixMap = new HashMap<>();
-        int matrixWidth;
-        int matrixHeight;
+        int matrixWidth =0;
+        int matrixHeight = 0;
         Integer[][] matrix;
         for (String input : inputList) {
             String[] matrixLine = input.substring(input.indexOf('[') + 1, input.indexOf(']')).split("; ");
             String[] matrixLineElement;
-            matrixWidth = matrixLine[0].split(" ").length;
-            matrixHeight = matrixLine.length;
+            matrixHeight = matrixLine[0].split(" ").length;
+            matrixWidth = matrixLine.length;
             matrix = new Integer[matrixWidth][matrixHeight];
             for (int i = 0; i < matrixLine.length; i++) {
                 matrixLineElement = matrixLine[i].split(" ");
