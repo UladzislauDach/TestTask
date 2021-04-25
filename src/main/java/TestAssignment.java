@@ -7,14 +7,13 @@ import java.util.stream.Collectors;
 public class TestAssignment {
     public static void main(String[] args) throws IOException {
         Map<Character, Integer[][]> mapMatrix;
-        List<String> strings;
         String mathOperation;
         mathOperation = args[args.length - 1];
+        mapMatrix = stringToMapMatrix(argsToList(args));
 
-        strings = argsToList(args);
-        mapMatrix = stringToMapMatrix(strings);
 
-        Integer[][] result = multiplication(mapMatrix.get('A'), mapMatrix.get('B'));
+        Integer[][] result = getResult(mapMatrix, mathOperation);
+
 
         for (int i = 0; i < result.length; i++) {
             for (int j = 0; j < result[0].length; j++) {
@@ -22,7 +21,16 @@ public class TestAssignment {
             }
             System.out.println();
         }
-        System.out.println(mathOperation);
+    }
+// нужно использовать обратную польскую запись.
+    public static Integer[][] getResult(Map<Character, Integer[][]> mapMatrix, String operation) {
+        for (String s : operation){
+            if (s == '*') {
+                Integer[][] temp = multiplication(mapMatrix.get()
+            }
+        }
+
+        return null;
     }
 
     public static List<String> argsToList(String[] array) {
@@ -59,7 +67,7 @@ public class TestAssignment {
 
     public static Map<Character, Integer[][]> stringToMapMatrix(List<String> inputList) {
         Map<Character, Integer[][]> allMatrixMap = new HashMap<>();
-        int matrixWidth =0;
+        int matrixWidth = 0;
         int matrixHeight = 0;
         Integer[][] matrix;
         for (String input : inputList) {
