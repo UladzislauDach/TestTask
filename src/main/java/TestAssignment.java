@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.*;
 
 public class TestAssignment {
@@ -7,6 +6,7 @@ public class TestAssignment {
         mapMatrix = stringToMapMatrix(argsToList(args));
         String mathOperation = backPolishWritten(args[args.length - 1]);
 
+        //отстаётся запилить чтение польской записи и вычисление результата
 
         Integer[][] result = addition(mapMatrix.get('A'), mapMatrix.get('B'));
         for (int i = 0; i < result.length; i++) {
