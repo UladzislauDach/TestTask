@@ -1,8 +1,5 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TestAssignment {
     public static void main(String[] args) throws IOException {
@@ -10,27 +7,44 @@ public class TestAssignment {
         String mathOperation;
         mathOperation = args[args.length - 1];
         mapMatrix = stringToMapMatrix(argsToList(args));
+        backPolishWritten(mathOperation);
 
 
-        Integer[][] result = getResult(mapMatrix, mathOperation);
-
-
-        for (int i = 0; i < result.length; i++) {
-            for (int j = 0; j < result[0].length; j++) {
-                System.out.print(" " + result[i][j] + " ");
-            }
-            System.out.println();
-        }
+//        Integer[][] result = getResult(mapMatrix, mathOperation);
+//        for (int i = 0; i < result.length; i++) {
+//            for (int j = 0; j < result[0].length; j++) {
+//                System.out.print(" " + result[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
     }
-// нужно использовать обратную польскую запись.
-    public static Integer[][] getResult(Map<Character, Integer[][]> mapMatrix, String operation) {
-        for (String s : operation){
-            if (s == '*') {
-                Integer[][] temp = multiplication(mapMatrix.get()
+
+    // преобразование в обртную польскую запись.
+    public static void backPolishWritten(String operation) {
+        Stack<Character> stack = new Stack<>();
+        StringBuilder output = new StringBuilder();
+        char[] input = operation.toCharArray();
+        for (int i = 0; i < input.length; i++) {
+            switch (input[i]) {
+                case '+':
+                case '-':
+                    while (!stack.empty() && stack.peek() == '*') {
+                        while (!stack.empty()) output.append(stack.pop());
+                    }
+                    if (!stack.empty()) output.append(stack.pop());
+                    stack.push(input[i]);
+                    break;
+
+                case '*':
+                    if (!stack.isEmpty() && stack.peek() == '*') output.append(input[i]);
+                    else stack.push(input[i]);
+                    break;
+                default:
+                    output.append(input[i]);
             }
         }
-
-        return null;
+        while (!stack.isEmpty()) output.append(stack.pop());
+        System.out.println(output);
     }
 
     public static List<String> argsToList(String[] array) {
