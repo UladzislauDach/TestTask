@@ -5,10 +5,9 @@ public class TestAssignment {
     public static void main(String[] args) throws IOException {
         Map<Character, Integer[][]> mapMatrix;
         String mathOperation;
-        mathOperation = args[args.length - 1];
         mapMatrix = stringToMapMatrix(argsToList(args));
-        backPolishWritten(mathOperation);
-
+        mathOperation = backPolishWritten(args[args.length - 1]);
+        System.out.println(mathOperation);
 
 //        Integer[][] result = getResult(mapMatrix, mathOperation);
 //        for (int i = 0; i < result.length; i++) {
@@ -19,8 +18,8 @@ public class TestAssignment {
 //        }
     }
 
-    // преобразование в обртную польскую запись.
-    public static void backPolishWritten(String operation) {
+    // преобразование в обртную польскую запись
+    public static String backPolishWritten(String operation) {
         Stack<Character> stack = new Stack<>();
         StringBuilder output = new StringBuilder();
         char[] input = operation.toCharArray();
@@ -44,9 +43,10 @@ public class TestAssignment {
             }
         }
         while (!stack.isEmpty()) output.append(stack.pop());
-        System.out.println(output);
+        return output.toString();
     }
 
+    //массив в лист до пустой строки
     public static List<String> argsToList(String[] array) {
         List<String> list = new ArrayList<>();
         for (String line : array) {
@@ -57,6 +57,7 @@ public class TestAssignment {
         return list;
     }
 
+    // умножение матриц a и b
     public static Integer[][] multiplication(Integer[][] a, Integer[][] b) {
         if (a[0].length != b.length) {
             throw new IllegalArgumentException("matrices cannot be multiplied");
@@ -79,6 +80,7 @@ public class TestAssignment {
         return result;
     }
 
+    // из строки преобразую в Map<Character, Integer[][]> (ключ - имя матрицы, значение - матрица)
     public static Map<Character, Integer[][]> stringToMapMatrix(List<String> inputList) {
         Map<Character, Integer[][]> allMatrixMap = new HashMap<>();
         int matrixWidth = 0;
