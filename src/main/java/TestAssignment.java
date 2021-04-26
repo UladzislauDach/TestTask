@@ -4,18 +4,17 @@ import java.util.*;
 public class TestAssignment {
     public static void main(String[] args) throws IOException {
         Map<Character, Integer[][]> mapMatrix;
-        String mathOperation;
         mapMatrix = stringToMapMatrix(argsToList(args));
-        mathOperation = backPolishWritten(args[args.length - 1]);
-        System.out.println(mathOperation);
+        String mathOperation = backPolishWritten(args[args.length - 1]);
 
-//        Integer[][] result = getResult(mapMatrix, mathOperation);
-//        for (int i = 0; i < result.length; i++) {
-//            for (int j = 0; j < result[0].length; j++) {
-//                System.out.print(" " + result[i][j] + " ");
-//            }
-//            System.out.println();
-//        }
+
+        Integer[][] result = addition(mapMatrix.get('A'), mapMatrix.get('B'));
+        for (int i = 0; i < result.length; i++) {
+            for (int j = 0; j < result[0].length; j++) {
+                System.out.print(" " + result[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 
     // преобразование в обртную польскую запись
@@ -55,6 +54,20 @@ public class TestAssignment {
             } else break;
         }
         return list;
+    }
+
+    // сложение матриц
+    public static Integer[][] addition(Integer[][] a, Integer[][] b) {
+        if (a.length != b.length || a[0].length != b[0].length) {
+            throw new IllegalArgumentException("matrices cannot be addition");
+        }
+        Integer[][] result = new Integer[a.length][a[0].length];
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[0].length; j++) {
+                result[i][j] = a[i][j] + b[i][j];
+            }
+        }
+        return result;
     }
 
     // умножение матриц a и b
