@@ -70,7 +70,21 @@ public class TestAssignment {
         return result;
     }
 
-    // умножение матриц a и b
+    // разность матриц
+    public static Integer[][] subtraction (Integer[][] a, Integer[][] b) {
+        if (a.length != b.length || a[0].length != b[0].length) {
+            throw new IllegalArgumentException("matrices cannot be subtraction");
+        }
+        Integer[][] result = new Integer[a.length][a[0].length];
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[0].length; j++) {
+                result[i][j] = a[i][j] - b[i][j];
+            }
+        }
+        return result;
+    }
+
+    // произведение матриц a и b
     public static Integer[][] multiplication(Integer[][] a, Integer[][] b) {
         if (a[0].length != b.length) {
             throw new IllegalArgumentException("matrices cannot be multiplied");
