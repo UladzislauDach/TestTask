@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class TestAssignment {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Map<Character, Integer[][]> mapMatrix;
         mapMatrix = stringToMapMatrix(argsToList(args));
         String mathOperation = backPolishWritten(args[args.length - 1]);
@@ -18,7 +18,7 @@ public class TestAssignment {
     }
 
     // преобразование в обртную польскую запись
-    public static String backPolishWritten(String operation) {
+    private static String backPolishWritten(String operation) {
         Stack<Character> stack = new Stack<>();
         StringBuilder output = new StringBuilder();
         char[] input = operation.toCharArray();
@@ -46,7 +46,7 @@ public class TestAssignment {
     }
 
     //массив в лист до пустой строки
-    public static List<String> argsToList(String[] array) {
+    private static List<String> argsToList(String[] array) {
         List<String> list = new ArrayList<>();
         for (String line : array) {
             if (!line.equals("")) {
@@ -57,7 +57,7 @@ public class TestAssignment {
     }
 
     // сложение матриц
-    public static Integer[][] addition(Integer[][] a, Integer[][] b) {
+    private static Integer[][] addition(Integer[][] a, Integer[][] b) {
         if (a.length != b.length || a[0].length != b[0].length) {
             throw new IllegalArgumentException("matrices cannot be addition");
         }
@@ -71,7 +71,7 @@ public class TestAssignment {
     }
 
     // разность матриц
-    public static Integer[][] subtraction (Integer[][] a, Integer[][] b) {
+    private static Integer[][] subtraction(Integer[][] a, Integer[][] b) {
         if (a.length != b.length || a[0].length != b[0].length) {
             throw new IllegalArgumentException("matrices cannot be subtraction");
         }
@@ -85,7 +85,7 @@ public class TestAssignment {
     }
 
     // произведение матриц a и b
-    public static Integer[][] multiplication(Integer[][] a, Integer[][] b) {
+    private static Integer[][] multiplication(Integer[][] a, Integer[][] b) {
         if (a[0].length != b.length) {
             throw new IllegalArgumentException("matrices cannot be multiplied");
         }
@@ -108,7 +108,7 @@ public class TestAssignment {
     }
 
     // из строки преобразую в Map<Character, Integer[][]> (ключ - имя матрицы, значение - матрица)
-    public static Map<Character, Integer[][]> stringToMapMatrix(List<String> inputList) {
+    private static Map<Character, Integer[][]> stringToMapMatrix(List<String> inputList) {
         Map<Character, Integer[][]> allMatrixMap = new HashMap<>();
         int matrixWidth = 0;
         int matrixHeight = 0;
