@@ -2,13 +2,11 @@ import java.util.*;
 
 public class TestAssignment {
     public static void main(String[] args) {
-        Map<Character, Integer[][]> mapMatrix;
-        mapMatrix = stringToMapMatrix(argsToList(args));
-        String mathOperation = backPolishWritten(args[args.length - 1]);
+        Map<Character, Integer[][]> mapMatrix = stringToMapMatrix(argsToList(args));
+        String mathOperationInReversePolishWritten = reversePolishWritten(args[args.length - 1]);
 
-        //отстаётся запилить чтение польской записи и вычисление результата
 
-        Integer[][] result = addition(mapMatrix.get('A'), mapMatrix.get('B'));
+        Integer[][] result = calculate(mathOperationInReversePolishWritten, mapMatrix);
         for (int i = 0; i < result.length; i++) {
             for (int j = 0; j < result[0].length; j++) {
                 System.out.print(" " + result[i][j] + " ");
@@ -17,8 +15,33 @@ public class TestAssignment {
         }
     }
 
+    public static Integer[][] calculate(String mathOperation, Map<Character, Integer[][]> mapMatrix) {
+        char[] operationArr = mathOperation.toCharArray();
+        Stack<Integer[][]> stack = new Stack<>();
+
+        for (char c : operationArr) {
+            if (Character.isUpperCase(c)) {
+                stack.push(mapMatrix.get(c));
+            } else if (c == '+' || c == '-' || c == '*') {
+                switch (c) {
+                    case '+':
+                        stack.push(addition(stack.pop(), stack.pop()));
+                        break;
+                    case '-':
+                        stack.push(subtraction(stack.pop(), stack.pop()));
+                        break;
+                    case '*':
+                        stack.push(multiplication(stack.pop(), stack.pop()));
+                        break;
+                }
+            } else throw new IllegalArgumentException("Incorrect math operation input");
+
+        }
+        return stack.pop();
+    }
+
     // преобразование в обртную польскую запись
-    private static String backPolishWritten(String operation) {
+    private static String reversePolishWritten(String operation) {
         Stack<Character> stack = new Stack<>();
         StringBuilder output = new StringBuilder();
         char[] input = operation.toCharArray();
