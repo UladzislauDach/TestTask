@@ -4,12 +4,14 @@ public class TestAssignment {
     public static void main(String[] args) {
         Map<Character, Integer[][]> mapMatrix = stringToMapMatrix(argsToList(args));
         String mathOperationInReversePolishWritten = reversePolishWritten(args[args.length - 1]);
-
-
         Integer[][] result = calculate(mathOperationInReversePolishWritten, mapMatrix);
+        output(result);
+    }
+
+    public static void output(Integer[][] result) {
         for (int i = 0; i < result.length; i++) {
             for (int j = 0; j < result[0].length; j++) {
-                System.out.print(" " + result[i][j] + " ");
+                System.out.print("" + result[i][j] + " ");
             }
             System.out.println();
         }
