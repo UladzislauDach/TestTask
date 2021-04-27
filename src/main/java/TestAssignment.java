@@ -15,6 +15,7 @@ public class TestAssignment {
         }
     }
 
+    // считаем обратную польскую запись
     public static Integer[][] calculate(String mathOperation, Map<Character, Integer[][]> mapMatrix) {
         char[] operationArr = mathOperation.toCharArray();
         Stack<Integer[][]> stack = new Stack<>();
@@ -31,7 +32,9 @@ public class TestAssignment {
                         stack.push(subtraction(stack.pop(), stack.pop()));
                         break;
                     case '*':
-                        stack.push(multiplication(stack.pop(), stack.pop()));
+                        Integer[][] a = stack.pop();
+                        Integer[][] b = stack.pop();
+                        stack.push(multiplication(b, a));
                         break;
                 }
             } else throw new IllegalArgumentException("Incorrect math operation input");
@@ -81,6 +84,7 @@ public class TestAssignment {
 
     // сложение матриц
     private static Integer[][] addition(Integer[][] a, Integer[][] b) {
+
         if (a.length != b.length || a[0].length != b[0].length) {
             throw new IllegalArgumentException("matrices cannot be addition");
         }
@@ -145,7 +149,11 @@ public class TestAssignment {
             for (int i = 0; i < matrixLine.length; i++) {
                 matrixLineElement = matrixLine[i].split(" ");
                 for (int j = 0; j < matrixLineElement.length; j++) {
-                    matrix[i][j] = Integer.parseInt(matrixLineElement[j]);
+                    try {
+                        matrix[i][j] = Integer.parseInt(matrixLineElement[j]);
+                    } catch (NumberFormatException e) {
+                        throw new IllegalArgumentException("incorrect symbols into matrix");
+                    }
                 }
             }
             allMatrixMap.put(input.charAt(0), matrix);
