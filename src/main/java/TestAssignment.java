@@ -5,17 +5,20 @@ public class TestAssignment {
         Map<Character, Integer[][]> mapMatrix = stringToMapMatrix(argsToList(args));
         String mathOperationInReversePolishWritten = reversePolishWritten(args[args.length - 1]);
         Integer[][] result = calculate(mathOperationInReversePolishWritten, mapMatrix);
-        output(result);
+        matrixToString(result);
     }
 
-    public static void output(Integer[][] result) {
+    //matrix to string
+    public static void matrixToString(Integer[][] result) {
+        System.out.print("[");
         for (int i = 0; i < result.length; i++) {
             for (int j = 0; j < result[0].length; j++) {
-                System.out.print("" + result[i][j] + " ");
-
+                System.out.print(result[i][j]);
+                if (j != result[0].length - 1) System.out.print(" ");
             }
-            System.out.println();
+            if (i != result.length - 1) System.out.print("; ");
         }
+        System.out.print("]");
     }
 
     // считаем обратную польскую запись
@@ -87,7 +90,6 @@ public class TestAssignment {
 
     // сложение матриц
     private static Integer[][] addition(Integer[][] a, Integer[][] b) {
-
         if (a.length != b.length || a[0].length != b[0].length) {
             throw new IllegalArgumentException("matrices cannot be addition");
         }
@@ -127,11 +129,11 @@ public class TestAssignment {
             }
             for (int i = 0; i < a.length; i++) {
                 Integer[] rowI = a[i];
-                Integer s = 0;
+                int temp = 0;
                 for (int k = 0; k < a[0].length; k++) {
-                    s += rowI[k] * columnJ[k];
+                    temp += rowI[k] * columnJ[k];
                 }
-                result[i][j] = s;
+                result[i][j] = temp;
             }
         }
         return result;
@@ -144,7 +146,13 @@ public class TestAssignment {
         int matrixHeight = 0;
         Integer[][] matrix;
         for (String input : inputList) {
-            String[] matrixLine = input.substring(input.indexOf('[') + 1, input.indexOf(']')).split("; ");
+            String[] matrixLine;
+            try {
+                matrixLine = input.substring(input.indexOf('[') + 1, input.indexOf(']')).split("; ");
+            } catch (StringIndexOutOfBoundsException e) {
+                throw new IllegalArgumentException("incorrect matrix format");
+            }
+
             String[] matrixLineElement;
             matrixHeight = matrixLine[0].split(" ").length;
             matrixWidth = matrixLine.length;
